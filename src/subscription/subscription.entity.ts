@@ -1,6 +1,6 @@
 import {PrimaryColumn, OneToOne, JoinColumn, Unique, Entity, Column} from 'typeorm';
-import {ServiceEntity} from "./service.entity";
-import {UserEntity} from "./user.entity";
+import {ServiceEntity} from "../service/service.entity";
+import {UserEntity} from "../user/user.entity";
 
 @Entity({name: 'subscription'})
 @Unique("userId_serviceId", ["userId", "serviceId"]) // named; multiple fields

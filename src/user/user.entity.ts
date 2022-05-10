@@ -1,5 +1,5 @@
 import {PrimaryGeneratedColumn, Column, ManyToMany, Entity, JoinTable} from 'typeorm';
-import {ServiceEntity} from "./service.entity";
+import {ServiceEntity} from "../service/service.entity";
 
 @Entity('user')
 export class UserEntity {
@@ -16,7 +16,7 @@ export class UserEntity {
     @JoinTable({
         name: "subscription",
         joinColumns: [{name: "user_id", referencedColumnName: "id"}],
-        inverseJoinColumns: [{name: "service_id", referencedColumnName: "id"}]
+        inverseJoinColumns: [{name: "service_id", referencedColumnName: "id"}],
     })
     services: ServiceEntity[];
 }
