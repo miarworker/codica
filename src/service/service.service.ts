@@ -28,4 +28,8 @@ export class ServiceService {
             serviceEntities.filter(serviceEntity =>
                 serviceEntity.title.toLocaleLowerCase().indexOf(term) !== -1))
     }
+
+    findById(id: number):Promise<ServiceEntity>  {
+        return this.serviceRepository.findOne(id);
+    }
 }
