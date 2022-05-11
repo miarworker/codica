@@ -26,8 +26,14 @@ export class UserService {
         return this.usersRepository.save(userEntity);
     }
 
-    findServicesByUserId(id: number): Promise<ServiceEntity[]> {
-        return this.usersRepository.findOne(id, {relations: ['services']}).then(user => user.services);
+    findServicesByUserId(id: number) {
+        return this.servicesRepository
+            .query(`select service.*
+                          from service
+                                   INNER JOIN subscription on service.id = subscription.service_id
+                                   INNER JOIN "user" on "user".id = subscription.user_id
+                          where subscription.is_banned = false
+                            AND "user".id = ${id}`)
     }
 
     async createSubscription(userId: number, serviceId: number): Promise<UserEntity> {
