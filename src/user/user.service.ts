@@ -26,14 +26,12 @@ export class UserService {
         return this.usersRepository.save(userEntity);
     }
 
-    findServicesByUserId(id: number) {
-        return this.servicesRepository
-            .query(`select service.*
-                          from service
-                                   INNER JOIN subscription on service.id = subscription.service_id
-                                   INNER JOIN "user" on "user".id = subscription.user_id
-                          where subscription.is_banned = false
-                            AND "user".id = ${id}`)
+    findServicesByUserId(userId: number) {
+        return this.subscriptionRepository.find({where: {userId, isBanned: false}})
+            .then(subscriptionEntities => {
+                let serviceIds = subscriptionEntities.map(subscriptionEntity => subscriptionEntity.serviceId);
+                return this.servicesRepository.findByIds(serviceIds);
+            })
     }
 
     async createSubscription(userId: number, serviceId: number): Promise<UserEntity> {
