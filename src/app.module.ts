@@ -1,11 +1,11 @@
 import {Module} from "@nestjs/common";
+import {TypeOrmModule} from "@nestjs/typeorm";
 import {UserModule} from './user/user.module';
 import {ServiceModule} from './service/service.module';
 import {SubscriptionModule} from './subscription/subscription.module';
-import {DbModule} from "./db/db.module";
 
 @Module({
-    imports: [UserModule, ServiceModule, SubscriptionModule, DbModule],
+    imports: [UserModule, ServiceModule, SubscriptionModule, TypeOrmModule.forRoot()],
 })
 export class AppModule {
 }
